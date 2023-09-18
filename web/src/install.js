@@ -193,6 +193,12 @@ Vue.use(D2pUploader, {
 })
 d2CrudPlus.util.columnResolve.addTypes(types)
 // 修改官方字段类型
+d2CrudPlus.util.columnResolve.addTypes({
+  'vehicle_part':{ //如果与官方字段类型同名，将会覆盖官方的字段类型
+     form: { component: { name: '' } },
+     component: {}
+  }
+})
 const selectType = d2CrudPlus.util.columnResolve.getType('select')
 selectType.component.props.color = 'auto' // 修改官方的字段类型，设置为支持自动染色
 // 获取字典配置

@@ -18,7 +18,7 @@ import store from '@/store/index'
 // 菜单和路由设置
 import router from './router'
 import { menuHeader } from '@/menu'
-
+import moment from 'moment'
 // 按钮权限
 import '@/plugin/permission' // 加载permission
 
@@ -38,13 +38,19 @@ import util from '@/libs/util'
 
 // 引入echarts
 import * as echarts from 'echarts' // 注册echarts组件
+import DrVueEcharts from 'dr-vue-echarts';
+
 // 核心插件
+Vue.use(DrVueEcharts)
 Vue.use(d2Admin)
 Vue.use(VXETable)
 Vue.prototype.$md5 = md5
 Vue.prototype.$util = util
 Vue.prototype.$websocket = websocket
 Vue.prototype.$echarts = echarts
+// 全局引入moment
+Vue.prototype.$moment = moment//挂载Vue上
+
 new Vue({
   router,
   store,

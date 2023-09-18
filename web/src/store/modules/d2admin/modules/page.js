@@ -318,7 +318,40 @@ export default {
       if (router.app.$route.name !== 'index') {
         await router.push({ name: 'index' })
       }
-    }
+    },
+    async closeThis({state, commit, dispatch}) {
+      // 预定下个新页面
+      let newPage = {}
+      let tagName = state.current
+      const isCurrent = state.current === tagName
+      // 如果关闭的页面就是当前显示的页面
+      if (isCurrent) {
+        // 去找一个新的页面
+        const len = state.opened.length
+        for (let i = 0; i < len; i++) {
+          if (state.opened[i].fullPath === tagName) {
+            newPage = i < len - 1 ? state.opened[i + 1] : state.opened[i - 1]
+            break
+          }
+        }
+      }
+      // 找到这个页面在已经打开的数据里是第几个
+      const index = state.opened.findIndex(page => page.fullPath === tagName)
+      if (index >= 0) {
+        // 如果这个页面是缓存的页面 将其在缓存设置中删除
+        commit('keepAliveRemove', state.opened[index].name)
+        // 更新数据 删除关闭的页面
+        state.opened.splice(index, 1)
+      }
+      // 持久化
+      await dispatch('opened2db')
+      // 决定最后停留的页面
+      if (isCurrent) {
+        const { name = 'index', params = {}, query = {} } = newPage
+        const routerObj = { name, params, query }
+        await router.push(routerObj)
+      }
+    } 
   },
   mutations: {
     /**

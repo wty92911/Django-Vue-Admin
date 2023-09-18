@@ -49,7 +49,7 @@ export default {
       // 应用
       commit('apply', {
         oldColor: old,
-        newColor: state.value
+        newColor: process.env.VUE_APP_ELEMENT_COLOR,
       })
     }
   },
@@ -61,11 +61,11 @@ export default {
      * @param {Object} payload newColor {String} 新颜色
      */
     apply (state, { oldColor, newColor }) {
-      var options = {
-        oldColors: cloneDeep(forElementUI.getElementUISeries(oldColor)),
-        newColors: cloneDeep(forElementUI.getElementUISeries(newColor))
-      }
-      client.changer.changeColor(options)
+      // var options = {
+      //   oldColors: cloneDeep(forElementUI.getElementUISeries(oldColor)),
+      //   newColors: cloneDeep(forElementUI.getElementUISeries(newColor))
+      // }
+      // client.changer.changeColor(options)
     }
   }
 }

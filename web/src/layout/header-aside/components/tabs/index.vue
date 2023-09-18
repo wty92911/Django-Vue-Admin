@@ -169,6 +169,7 @@ export default {
      * @param {String} tagName tab 名称
      */
     handleTabRemove (tagName) {
+      console.log( tagName )
       this.close({ tagName })
     }
   },

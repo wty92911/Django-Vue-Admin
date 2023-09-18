@@ -21,9 +21,9 @@
           >
             <i class="el-icon-plus" /> 新增
           </el-button>
-          <el-button size="small" type="danger" @click="batchDelete">
+          <!-- <el-button size="small" type="danger" @click="batchDelete">
             <i class="el-icon-delete"></i> 批量删除
-          </el-button>
+          </el-button> -->
           <el-button
             size="small"
             type="warning"

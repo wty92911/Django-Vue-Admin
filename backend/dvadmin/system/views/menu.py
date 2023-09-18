@@ -177,6 +177,7 @@ class MenuViewSet(CustomModelViewSet):
             queryset = Menu.objects.filter(id__in=menuIds, status=1)
         serializer = WebRouterSerializer(queryset, many=True, request=request)
         data = serializer.data
+        print(data)
         return SuccessResponse(data=data, total=len(data), msg="获取成功")
 
     def list(self,request):

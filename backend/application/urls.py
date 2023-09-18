@@ -71,6 +71,7 @@ urlpatterns = (
                 name="schema-redoc",
             ),
             path("api/system/", include("dvadmin.system.urls")),
+            path("api/autocare/", include("autocare.urls")),
             path("api/login/", LoginView.as_view(), name="token_obtain_pair"),
             path("api/logout/", LogoutView.as_view(), name="token_obtain_pair"),
             path("token/refresh/", CustomTokenRefreshView.as_view(), name="token_refresh"),
