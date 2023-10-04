@@ -106,6 +106,36 @@ class VehiclePartModel(CoreModel):
     @property
     def inventory_average_price(self):
         return self.inventory_total_price // self.inventory_quantity
+
+class SaleOrderPartModel(CoreModel):
+    vehicle_part = models.ForeignKey(
+        to='VehiclePartModel',
+        verbose_name='配件',
+        on_delete=models.PROTECT,
+        null=False,
+        blank=False,
+        help_text="配件",
+    )
+    sale_order = models.ForeignKey(
+        to='SaleOrderModel',
+        verbose_name='消费单',
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
+        help_text="消费单"
+    )
+    quantity = models.PositiveIntegerField(default=1, verbose_name="数量", help_text="数量")
+    average_price = models.PositiveIntegerField(default=0, verbose_name="单价", help_text="单价")
+    total_price = models.PositiveIntegerField(default=0, verbose_name="总价", help_text="总价")
+    class Meta:
+        db_table = "autocare_sale_order_part"
+        verbose_name = '消费单配件表'
+        verbose_name_plural = verbose_name
+        ordering = ('-create_datetime',)
+        constraints = [
+            UniqueConstraint(fields=['vehicle_part', 'sale_order'], name='unique_vehicle_part_sale_order')
+        ]
+
 class SaleOrderModel(CoreModel):
     '''
     消费单
@@ -114,7 +144,11 @@ class SaleOrderModel(CoreModel):
     real_price = models.PositiveIntegerField(default=0, verbose_name="实付价格", help_text="实付价格")
     discounted_price = models.PositiveIntegerField(default=0, verbose_name="优惠价格", help_text="优惠价格")
     datetime = models.TextField(default='', verbose_name="日期时间", help_text="日期时间")
-    parts = models.TextField(default='', verbose_name="消费零件的json存储", help_text="消费零件的json存储")
+    
+    @property
+    def parts(self):
+        return SaleOrderPartModel.objects.filter(sale_order=self.id)
+    
     vehicle = models.ForeignKey(
         to="VehicleModel",
         verbose_name="消费车辆",

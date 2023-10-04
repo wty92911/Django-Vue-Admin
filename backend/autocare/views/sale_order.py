@@ -7,13 +7,14 @@ from dvadmin.utils.viewset import CustomModelViewSet
 from dvadmin.utils.serializers import CustomModelSerializer
 from autocare.views.vehicle import VehicleModelSerializer
 from autocare.views.employee import EmployeeModelSerializer, EmployeeModelCreateUpdateSerializer
-
+from autocare.views.sale_order_part import SaleOrderPartModelSerializer
 class SaleOrderModelSerializer(CustomModelSerializer):
     """
     序列化器
     """
     employees = EmployeeModelSerializer(many=True, read_only=True)
-    # vehicle = VehicleModelSerializer(read_only=True)
+    parts = SaleOrderPartModelSerializer(read_only=True, many=True)
+    # vehicle = VehicleModelSerializer(read_only=True) 前端只需要这个 vehicle 的 id
     class Meta:
         model = SaleOrderModel
         fields = [
@@ -31,7 +32,6 @@ class SaleOrderModelCreateUpdateSerializer(CustomModelSerializer):
         fields = [
             'id', 'total_price', 'real_price', 'discounted_price', 'datetime',
             'vehicle', 'employees', 'current_mile', 'status',
-            'parts',
         ]
 class CustomFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
