@@ -119,14 +119,15 @@ export const crudOptions = (vm) => {
         }
       },
       {
-        title: '进货时间',
+        title: '进货日期',
         key: 'datetime',
         sortable: 'custom',
-        minWidth: 90,
+        minWidth: 150,
         search: {
-          disabled: true,
+          disabled: false,
         },
-        type: 'input',
+        type: 'datetime',
+        
       },
       {
         title: '采购单总额',

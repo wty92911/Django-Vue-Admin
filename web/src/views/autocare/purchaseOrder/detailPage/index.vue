@@ -8,18 +8,18 @@
 				type="datetime"
 				style="width: 20%; font-weight: bold; margin-right: 5px"
 				placeholder="选择日期时间">
-    	</el-date-picker>
-			供应商<el-select 
+			</el-date-picker>
+			供应商<el-select
 				v-model="purchase_order.supply_company"
-        value-key="name"
+				value-key="name"
 				style="width: 20%; margin-left: 10px; margin-right: 10px;"
 				filterable placeholder="请输入或选择供应商"
-        >
-        <template slot="prefix">
-          <span style="padding-left: 5px;">
-            <i class="el-icon-office-building"></i>
-          </span>
-        </template>
+				>
+				<template slot="prefix">
+					<span style="padding-left: 5px;">
+						<i class="el-icon-office-building"></i>
+					</span>
+				</template>
 				<el-option
 					v-for="item in all_supply_companys"
 					:key="item.id"
@@ -35,63 +35,63 @@
 				readonly
 			></el-input>
 		</el-form-item>
-    <el-form-item>
-    <el-select 
-      v-model="purchase_order.pay_method"
-      value-key="name" 
-      filterable
-      style="width: 20%; margin-right: 5px; font-weight: bold;"
-      placeholder="请选择支付方式" >
-      <template slot="prefix">
-        <span style="padding-left: 5px;">
-          <i class="el-icon-s-shop"></i>
-        </span>
-      </template>
-      <el-option
-        v-for="item in all_pay_methods"
-        :key="item.id"
-        :label="item.name"
-        :value="item">
-      </el-option>
-    </el-select>
-    付款人<el-select 
-      v-model="purchase_order.payer"
-      value-key="name" 
-      filterable
-      style="width: 20%; margin-left: 10px; margin-right: 5px; font-weight: bold;"
-      placeholder="请选择付款人" >
-      <template slot="prefix">
-        <span style="padding-left: 5px;">
-          <i class="el-icon-user"></i>
-        </span>
-      </template>
-      <el-option
-        v-for="item in all_employees"
-        :key="item.id"
-        :label="item.name"
-        :value="item">
-      </el-option>
-    </el-select>
-    实际支付<el-input 
-      v-model="purchase_order.real_price"
-      style="width: 15%; margin-left: 10px; margin-right: 5px; font-weight: bold;"
-      prefix-icon="el-icon-coin"
-      placeholder="请输入付款金额" >
-    </el-input>
-  </el-form-item>
-			<el-table  :data="purchase_order.parts" style="margin-top: 20px; width: 100%">
-        <el-table-column label="序号" min-width="5%">
-          <template slot-scope="scope">
+		<el-form-item>
+		<el-select
+			v-model="purchase_order.pay_method"
+			value-key="name"
+			filterable
+			style="width: 20%; margin-right: 5px; font-weight: bold;"
+			placeholder="请选择支付方式" >
+			<template slot="prefix">
+				<span style="padding-left: 5px;">
+					<i class="el-icon-s-shop"></i>
+				</span>
+			</template>
+			<el-option
+				v-for="item in all_pay_methods"
+				:key="item.id"
+				:label="item.name"
+				:value="item">
+			</el-option>
+		</el-select>
+		付款人<el-select
+			v-model="purchase_order.payer"
+			value-key="name"
+			filterable
+			style="width: 20%; margin-left: 10px; margin-right: 5px; font-weight: bold;"
+			placeholder="请选择付款人" >
+			<template slot="prefix">
+				<span style="padding-left: 5px;">
+					<i class="el-icon-user"></i>
+				</span>
+			</template>
+			<el-option
+				v-for="item in all_employees"
+				:key="item.id"
+				:label="item.name"
+				:value="item">
+			</el-option>
+		</el-select>
+		实际支付<el-input
+			v-model="purchase_order.real_price"
+			style="width: 15%; margin-left: 10px; margin-right: 5px; font-weight: bold;"
+			prefix-icon="el-icon-coin"
+			placeholder="请输入付款金额" >
+		</el-input>
+	</el-form-item>
+			<el-table	:data="purchase_order.parts" style="margin-top: 20px; width: 100%">
+				<el-table-column label="序号" min-width="5%">
+					<template slot-scope="scope">
 					{{ scope.$index + 1 }}
-          </template>
+					</template>
 				</el-table-column>
 				<el-table-column label="配件名称" min-width="30%">
 					<template slot-scope="scope">
 						<el-select
 							v-model="scope.row.vehicle_part"
-							value-key="name" 
+							value-key="name"
 							style="width: 100%;"
-							filterable placeholder="请输入或选择配件" 
+							filterable placeholder="请输入或选择配件"
 							@change="handlePartSelectClick">
 							<el-option
 								v-for="item in all_vehicle_parts"
@@ -109,10 +109,9 @@
 							placeholder=""
 							disabled
 						></el-input> -->
-            <el-button @click="showHistoryPriceChart(scope.row.vehicle_part)"
-              :disabled="(scope.row.vehicle_part && scope.row.vehicle_part.id) ? false : true"
-            ><i class="el-icon-time"></i></el-button>
-            
+						<el-button @click="showHistoryPriceChart(scope.row.vehicle_part)"
+							:disabled="(scope.row.vehicle_part && scope.row.vehicle_part.id) ? false : true"
+						><i class="el-icon-time"></i></el-button>						
 					</template>
 				</el-table-column>
 				<el-table-column label="配件数量(个)" min-width="20%">
@@ -160,129 +159,126 @@
 						type="success"
 						style="margin-top: 10px; width: 10%;"
 					>保存采购单</el-button>
-			  </div>
+				</div>
 			</el-form-item>
 		</el-form>
 		</el-main>
-    <el-dialog title="历史单价" :visible.sync="historyPriceChartVisiable">
-      <!-- X: 时间、供货商、Y: 均价 -->
-      <div class="chart">
-        <line-chart :data="history_price_chart_data" />
-      </div>
-    </el-dialog>
+		<el-dialog title="历史单价" :visible.sync="historyPriceChartVisiable">
+			<!-- X: 时间、供货商、Y: 均价 -->
+			<div class="chart">
+				<line-chart :data="history_price_chart_data" />
+			</div>
+		</el-dialog>
 	</d2-container>
 </template>
 <script>
-import { GetCompanys, GetVehicleParts, GetEmployees, GetOrderPart, DelOrderPart, UpdateOrderPart, AddOrderPart} from './api'
-import { AddObj as AddSaleOrder, UpdateObj as UpdateSaleOrder} from '../api'
-import { mapState, mapActions } from 'vuex'
+import { GetCompanys, GetVehicleParts, GetEmployees, GetOrderPart, DelOrderPart, UpdateOrderPart, AddOrderPart } from './api'
+import { AddObj as AddSaleOrder, UpdateObj as UpdateSaleOrder } from '../api'
+import { mapActions } from 'vuex'
 export default {
-  name: 'purchaseOrderDetailPage',
-  components: {
-  },
-  data () {
-    return {
-		    type: 'add',
-        historyPriceChartVisiable: false,
-        // vehicle: {
-        //     plate_number: '',
-        //     customer: {
-        //         name: '',
-        //         mobile: '',
-        //     }
-        // },
-				purchase_order: {
+	name: 'purchaseOrderDetailPage',
+	components: {
+	},
+	data () {
+		return {
+			type: 'add',
+			historyPriceChartVisiable: false,
+			purchase_order: {
 
-					id: null,
-					datetime: new Date(),
-          supply_company: null,
-					parts: [
-							{
-                id: null,
-                vehicle_part: {
-                  id: '',
-                  name: '',
-                  estimated_price: 0,
-                },
-                quantity: 1,
-                average_price: null,
-                total_price: 0,
-							}
-					],
-          payer: null,
-          pay_method: null,
-					real_price: null,
-					total_price: null,
+				id: null,
+				datetime: new Date(),
+				supply_company: null,
+				parts: [
+						{
+							id: null,
+							vehicle_part: {
+								id: '',
+								name: '',
+								estimated_price: 0,
+							},
+							quantity: 1,
+							average_price: null,
+							total_price: 0,
+						}
+				],
+				del_parts: [],
+				payer: null,
+				pay_method: null,
+				real_price: null,
+				total_price: null,
 			},
-      all_employees: null,
+			all_employees: null,
 			all_vehicle_parts: null,
 			all_supply_companys: null,
-      history_price_chart_data: null,
+			history_price_chart_data: null,
 
-    };
-  },
-  created() {
-    // 使用 Promise.all 等待多个异步操作完成
-    Promise.all([
-      this.getVehicleParts(),
-      this.getEmployees(),
-      this.getCompanys(),
-    ]).then(([vehiclePartsData, employeesData, companysData]) => {
-      // 将获取的数据分别赋值给相应的属性
-      this.all_vehicle_parts = vehiclePartsData;
-      this.all_employees = employeesData;
-      this.all_supply_companys = companysData;
-      // 继续执行 loadPurchaseOrderData 方法
-      if (this.$route.params.purchase_order) {
-        this.loadPurchaseOrderData();
-      }
-    });
-    this.all_pay_methods = [
-      {
-        "id": 0, "name": "微信",
-      },
-      {
-        "id": 1, "name": "支付宝",
-      },
-      {
-        "id": 2, "name": "现金",
-      },
-    ];
-  },
+		};
+	},
+	created() {
+		// 使用 Promise.all 等待多个异步操作完成
+		Promise.all([
+			this.getVehicleParts(),
+			this.getEmployees(),
+			this.getCompanys(),
+		]).then(([vehiclePartsData, employeesData, companysData]) => {
+			// 将获取的数据分别赋值给相应的属性
+			this.all_vehicle_parts = vehiclePartsData;
+			this.all_employees = employeesData;
+			this.all_supply_companys = companysData;
+			// 继续执行 loadPurchaseOrderData 方法
+			if (this.$route.params.purchase_order) {
+				this.loadPurchaseOrderData();
+			}
+		});
+		this.all_pay_methods = [
+			{
+				"id": 0, "name": "微信",
+			},
+			{
+				"id": 1, "name": "支付宝",
+			},
+			{
+				"id": 2, "name": "现金",
+			},
+		];
+
+	},
 	mounted() {
 	},
-  computed: {
+	computed: {
 		
-    handleNaN() {
+		handleNaN() {
 			return (num) => isNaN(num) ? "请先输入实际单价" : num;
-    },
-    // isHistoryPriceChartDisabled() {
-    //   return (part && part.id) ? false : true;
-    // },
-  },
-  watch: {
-    'purchase_order.parts': {
+		},
+		// isHistoryPriceChartDisabled() {
+		//	 return (part && part.id) ? false : true;
+		// },
+	},
+	watch: {
+		'purchase_order.parts': {
 			deep: true,
 			handler(newVal, oldVal) {
 				this.updateTotalPrice(newVal, oldVal)
 			}
-    }
-  },
-  methods: {
+		}
+	},
+	methods: {
 		...mapActions('d2admin/page', [
-      'close',
+			'close',
 			'closeThis',
-    ]),
-    loadPurchaseOrderData() {
-      this.type = 'edit';
-      this.purchase_order = { ...this.$route.params.purchase_order };
-      this.purchase_order.datetime = new Date(this.purchase_order.datetime);
-      this.purchase_order.supply_company = this.all_supply_companys.find(company => company.id === this.purchase_order.supply_company);
-      this.purchase_order.payer = this.all_employees.find(emp => emp.id === this.purchase_order.payer);
-      this.purchase_order.pay_method = this.all_pay_methods.find(method => method.id === this.purchase_order.pay_method);
-      console.log(this.purchase_order);
-    },
-    updateTotalPrice(newVal, oldVal) {
+		]),
+		loadPurchaseOrderData() {
+			this.type = 'edit';
+			this.purchase_order = { ...this.$route.params.purchase_order };
+			console.log("edit")
+			console.log(this.purchase_order.datetime)
+			this.purchase_order.datetime = new Date(this.purchase_order.datetime);
+			this.purchase_order.supply_company = this.all_supply_companys.find(company => company.id === this.purchase_order.supply_company);
+			this.purchase_order.payer = this.all_employees.find(emp => emp.id === this.purchase_order.payer);
+			this.purchase_order.pay_method = this.all_pay_methods.find(method => method.id === this.purchase_order.pay_method);
+			console.log(this.purchase_order);
+		},
+		updateTotalPrice(newVal, oldVal) {
 			const selectedParts = this.purchase_order.parts.map(item => item.vehicle_part.name);
 			const duplicatePart = selectedParts.find(name => selectedParts.indexOf(name) !== selectedParts.lastIndexOf(name));
 			if (duplicatePart) {
@@ -303,8 +299,8 @@ export default {
 					this.purchase_order.total_price += row.total_price;
 				}
 			}
-    },
-    async getCompanys() {
+		},
+		async getCompanys() {
 			try {
 				const response = await GetCompanys();
 				return response.data.data;
@@ -312,8 +308,8 @@ export default {
 				console.error('Error fetching companys:', error);
 				return []; // 返回空数组或者其他默认值
 			}
-    },
-    async getEmployees() {
+		},
+		async getEmployees() {
 			try {
 				const response = await GetEmployees();
 				return response.data.data;
@@ -321,8 +317,8 @@ export default {
 				console.error('Error fetching employees:', error);
 				return []; // 返回空数组或者其他默认值
 			}
-    },
-    async getVehicleParts() {
+		},
+		async getVehicleParts() {
 			try {
 				const response = await GetVehicleParts();
 				return response.data.data
@@ -330,46 +326,49 @@ export default {
 				console.error('Error fetching vehicle parts:', error);
 				return []; // 返回空数组或者其他默认值
 			}
-    },
-    handlePartSelectClick() {
+		},
+		handlePartSelectClick() {
 			// console.log(this.parts);
-    },
-    
-    async showHistoryPriceChart(part) {
-      this.history_price_chart_data = [];
-      const response = await GetOrderPart({"vehicle_part": part.id});
-      console.log("showHistoryPriceChart");
-      console.log(response);
-      
-      const history_price_parts = response.data.data;
-      this.history_price_chart_data = [
-        {
-          name: part.name + "历史单价",
-          data: history_price_parts.map(part => ({label: part.create_datetime, value: part.average_price})).sort((a, b) => new Date(a.label) - new Date(b.label))
-        }
-      ]
-      
-      console.log(this.history_price_chart_data)
-      if (response.data.data.length < 1) {
-        this.$message.error('查询配件历史价格失败: 数据不足');
-        return;
-      }
-      this.historyPriceChartVisiable = true;
-    },
-    removePart(part) {
+		},
+		
+		async showHistoryPriceChart(part) {
+			this.history_price_chart_data = [];
+			const response = await GetOrderPart({"vehicle_part": part.id});
+			console.log("showHistoryPriceChart");
+			console.log(response);
+			
+			const history_price_parts = response.data.data;
+			this.history_price_chart_data = [
+				{
+					name: part.name + "历史单价",
+					data: history_price_parts.map(part => ({label: part.create_datetime, value: part.average_price})).sort((a, b) => new Date(a.label) - new Date(b.label))
+				}
+			]
+			
+			console.log(this.history_price_chart_data)
+			if (response.data.data.length < 1) {
+				this.$message.error('查询配件历史价格失败: 数据不足');
+				return;
+			}
+			this.historyPriceChartVisiable = true;
+		},
+		removePart(part) {
 			var index = this.purchase_order.parts.indexOf(part);
 			if (index !== -1) {
-        if (this.purchase_order.parts[index].id) {
-          DelOrderPart(this.purchase_order.parts[index].id);
-        }
+
+				// if (this.purchase_order.parts[index].id) {
+				//	 DelOrderPart(this.purchase_order.parts[index].id);
+				// }
+				this.purchase_order.del_parts = this.purchase_order.del_parts || [];
+				this.purchase_order.del_parts.push({ ...this.purchase_order.parts[index] });
 				this.purchase_order.parts.splice(index, 1);
 			}
-    },
-    	// 新增表单
-    addPart() {
+		},
+			// 新增表单
+		addPart() {
 			this.purchase_order.parts.push(
 				{
-          id: null,
+					id: null,
 					vehicle_part: {
 						id: '',
 						name: '',
@@ -380,68 +379,86 @@ export default {
 					total_price: 0,
 				}
 			);
-    },
-   	async handleButtonSave() {
-      
+		},
+	 	async handleButtonSave() {
+			const options = { timeZone: 'Asia/Shanghai', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' };
 			let purchase_order = {
 				"total_price": this.purchase_order.total_price,
 				"real_price": this.purchase_order.real_price ? this.purchase_order.real_price: this.purchase_order.total_price,
-				"datetime": this.$moment(this.purchase_order.datetime).format('YYYY-MM-DD hh:mm:ss'),
-        "payer": this.purchase_order.payer.id,
-        "pay_method": this.purchase_order.pay_method.id,
-        "supply_company": this.purchase_order.supply_company.id,
+				"datetime": this.purchase_order.datetime,
+				"payer": this.purchase_order.payer.id,
+				"pay_method": this.purchase_order.pay_method.id,
+				"supply_company": this.purchase_order.supply_company.id,
 			}
 			console.log(purchase_order)
 			try {
-        var response;
-        if (this.type === 'edit') {
-          purchase_order.id = this.purchase_order.id;
-          response = await UpdateSaleOrder(purchase_order);
-        } else {
-          response = await AddSaleOrder(purchase_order);
-          this.purchase_order.id = response.data.id;
-        }
-        console.log("response: ")
-        console.log(response)
-        // return response.data.data
-        for (var i = 0; i < this.purchase_order.parts.length; i++) {
-          let order_part = {
-            "id": this.purchase_order.parts[i].id,
-            "vehicle_part": this.purchase_order.parts[i].vehicle_part.id,
-            "purchase_order": this.purchase_order.id,
-            "quantity": this.purchase_order.parts[i].quantity,
-            "average_price": this.purchase_order.parts[i].average_price,
-            "total_price": this.purchase_order.parts[i].total_price
-          }
-          
-          if (order_part.id) {
-            console.log(order_part)
-            await UpdateOrderPart(order_part);
-          } else {
-            var response
-            response = await AddOrderPart(order_part);
-            console.log("新增采购单配件")
-            console.log(response)
-            this.purchase_order.parts[i].id = response.data.id;
-          }
-        }
-        this.$message({
-          message: '保存采购单成功',
-          type: 'success'
-        });
-        this.closeThis();
+				var response;
+				if (this.type === 'edit') {
+					purchase_order.id = this.purchase_order.id;
+					response = await UpdateSaleOrder(purchase_order);
+				} else {
+					response = await AddSaleOrder(purchase_order);
+					this.purchase_order.id = response.data.id;
+				}
+				console.log("response: ")
+				console.log(response)
+				// return response.data.data
+				for (var i = 0; i < this.purchase_order.parts.length; i++) {
+					let order_part = {
+						"id": this.purchase_order.parts[i].id,
+						"vehicle_part": this.purchase_order.parts[i].vehicle_part.id,
+						"purchase_order": this.purchase_order.id,
+						"quantity": this.purchase_order.parts[i].quantity,
+						"average_price": this.purchase_order.parts[i].average_price,
+						"total_price": this.purchase_order.parts[i].total_price
+					}
+					
+					if (order_part.id) {
+						console.log(order_part)
+						await UpdateOrderPart(order_part);
+					} else {
+						var response
+						response = await AddOrderPart(order_part);
+						console.log("新增采购单配件")
+						console.log(response)
+						this.purchase_order.parts[i].id = response.data.id;
+					}
+				}
+				console.log("准备删除")
+				if (this.purchase_order.del_parts) {
+					for (var i = 0; i < this.purchase_order.del_parts.length; i++) {
+						let del_part = {
+							"id": this.purchase_order.del_parts[i].id,
+							// "vehicle_part": this.purchase_order.del_parts[i].vehicle_part.id,
+							// "purchase_order": this.purchase_order.id,
+							// "quantity": this.purchase_order.del_parts[i].quantity,
+							// "average_price": this.purchase_order.del_parts[i].average_price,
+							// "total_price": this.purchase_order.del_parts[i].total_price
+						}
+						if (del_part.id) {
+							console.log(del_part)
+							await DelOrderPart(del_part.id);
+						}
+					}
+				}
+
+				this.$message({
+					message: '保存采购单成功',
+					type: 'success'
+				});
+				this.closeThis();
 			} catch (error) {
 				this.$message.error('保存采购单失败');
 				console.error('Error adding purchase_order:', error);
 			}
-    },
-  }
+		},
+	}
 }
 </script>
 
 <style scoped lang="scss">
 .chart {
-  width: 100%;
-  height: 300px;
+	width: 100%;
+	height: 300px;
 }
 </style>
