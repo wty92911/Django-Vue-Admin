@@ -11,7 +11,7 @@ class EmployeeModel(CoreModel):
     name = models.CharField(max_length=40, verbose_name="姓名", help_text="姓名", unique=True, null=False, blank=False)
     TYPE_CHOICES = (
         (0, "老板"),
-        (1, "管理"),
+        (1, "经理"),
         (2, "员工")
     )
     employee_type = models.IntegerField(
@@ -78,6 +78,7 @@ class VehicleModel(CoreModel):
         blank=False,
         help_text="所属客户",
     )
+    miles = models.PositiveIntegerField(default=0, verbose_name="里程数", help_text="里程数")
     class Meta:
         db_table = "autocare_vehicle"
         verbose_name = '机动车表'
@@ -172,7 +173,7 @@ class SaleOrderModel(CoreModel):
     current_mile = models.PositiveIntegerField(default=0, verbose_name="当前里程", help_text="当前里程")
     #TODO: 一键筛选需要保养的车辆
     STATUS_CHOICES = (
-        (0, "未完成"),
+        (0, "待结算"),
         (1, "已结算")
     )
 

@@ -88,6 +88,7 @@ export const crudOptions = (vm) => {
           url: companyPrefix,
           value: 'id', // 数据字典中value字段的属性名
           label: 'name', // 数据字典中label字段的属性名
+          cache: false,
           getData: (url, dict, { form, component }) => { // 配置此参数会覆盖全局的getRemoteDictFunc
             return request({url: url}).then(ret=>{
               // console.log(ret.data)

@@ -109,6 +109,7 @@ export const crudOptions = (vm) => {
           url: vehiclePrefix,
           value: 'id', // 数据字典中value字段的属性名
           label: 'plate_number', // 数据字典中label字段的属性名
+          cache: false,
           getData: (url, dict, { form, component }) => { // 配置此参数会覆盖全局的getRemoteDictFunc
             return request({url: url}).then(ret=>{
               // console.log(ret.data)
@@ -144,7 +145,7 @@ export const crudOptions = (vm) => {
         key: 'current_mile',
         show: true,
         search: {
-          disabled: false,
+          disabled: true,
         },
         type: 'input',
         form: {
@@ -165,7 +166,7 @@ export const crudOptions = (vm) => {
         }
       },
       {
-        title: '消费总额(元)',
+        title: '消费总价(元)',
         key: 'total_price',
         show: true,
         search: {
@@ -186,6 +187,15 @@ export const crudOptions = (vm) => {
           component: {
           }
         }
+      },
+      {
+        title: '实际支付(元)',
+        key: 'real_price',
+        show: true,
+        search: {
+          disabled: true
+        },
+        type: 'input',
       },
       {
         title: '状态',

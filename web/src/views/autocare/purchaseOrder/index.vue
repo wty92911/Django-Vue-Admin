@@ -78,18 +78,15 @@ export default {
   methods: {
     addPurchaseOrder() {
       this.$router.push({
-        name: 'purchaseOrderDetailPage',
+        name: 'purchaseOrderCreatePage',
         query: {}
       })
     },
     handleCustomEdit(row) {
-      // console.log(row.row)
       this.$router.push({
-        name: 'purchaseOrderDetailPage',
-        params: {purchase_order: row.row}
+        name: 'purchaseOrderUpdatePage',
+        params: {purchase_order: row.row, id: row.row.id}
       })
-      // console.log(index)
-      // console.log(row)
     },
     getCrudOptions () {
       return crudOptions(this)

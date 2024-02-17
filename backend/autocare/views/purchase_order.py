@@ -57,10 +57,6 @@ class PurchaseOrderViewSet(CustomModelViewSet):
         # Additional filter for datetime before specified date
         specified_date = self.request.query_params.get('datetime')
         if specified_date:
-            # print(specified_date)
-            # specified_date = datetime.strptime(specified_date, "%Y-%m-%dT%H:%M:%S.%fZ")
-            # print(specified_date.tzname())
-            # for q in queryset:
-            #     print(q.datetime)
             queryset = queryset.filter(datetime__lte=specified_date)
+        
         return queryset

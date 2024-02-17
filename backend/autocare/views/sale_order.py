@@ -19,7 +19,7 @@ class SaleOrderModelSerializer(CustomModelSerializer):
         model = SaleOrderModel
         fields = [
             'id', 'total_price', 'real_price', 'discounted_price', 'datetime',
-            'vehicle', 'employees', 'current_mile', 'status', 'parts',
+            'vehicle', 'employees', 'current_mile', 'status', 'parts', 'payee', 'pay_method',
         ]
 
 class SaleOrderModelCreateUpdateSerializer(CustomModelSerializer):
@@ -31,8 +31,18 @@ class SaleOrderModelCreateUpdateSerializer(CustomModelSerializer):
         model = SaleOrderModel
         fields = [
             'id', 'total_price', 'real_price', 'discounted_price', 'datetime',
-            'vehicle', 'employees', 'current_mile', 'status',
+            'vehicle', 'employees', 'current_mile', 'status', 'payee', 'pay_method',
         ]
+    def update(self, instance, validated_data):
+        # 自定义更新逻辑
+        status = validated_data.get('status', None)
+        if status == 0:
+            # 如果status为0，清空payee和pay_method的值
+            validated_data['payee'] = None
+            validated_data['pay_method'] = -1  # 设置为默认值或者你认为合适的值
+
+        return super().update(instance, validated_data)
+
 class CustomFilter(BaseFilterBackend):
     def filter_queryset(self, request, queryset, view):
         params = request.query_params
